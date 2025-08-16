@@ -22,7 +22,7 @@ React Context API	JWT Auth	Sequelize ORM
 🔧 Setup Instructions
 1. Clone the repo
 
-git clone https://github.com/your-username/e-commerce.git
+git clone https://github.com/Elijah414/e-commerce.git
 cd fast-delivery
 
 2. Install dependencies
