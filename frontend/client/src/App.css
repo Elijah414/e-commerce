@@ -1,50 +1,32 @@
-/* Utility: Card base */
-.card {
-  padding: 2em;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+.homepage-dashboard {
+  padding: 2rem;
+  background-color: #f9fafb;
 }
 
-/* Headings */
-h1 {
-  font-size: 2.25rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
+.category-section {
+  margin-bottom: 3rem;
 }
 
-h2 {
-  font-size: 1.5rem;
+.category-title {
+  font-size: 1.6rem;
   font-weight: 600;
-  margin-top: 2rem;
+  color: #1e293b;
   margin-bottom: 1rem;
+  border-left: 5px solid #3b82f6;
+  padding-left: 10px;
 }
 
-/* Input fields */
-input {
-  display: block;
-  margin: 0.5rem auto;
-  padding: 0.5rem;
-  width: 80%;
-  max-width: 400px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-
-/* Product grid layout */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1.5rem;
-  margin-top: 1rem;
 }
 
-/* Product card */
 .product-card {
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  background: white;
+  border-radius: 10px;
   padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   text-align: center;
   transition: transform 0.2s ease;
 }
@@ -53,41 +35,53 @@ input {
   transform: translateY(-4px);
 }
 
-.product-card img {
+.product-image {
   width: 100%;
-  max-height: 180px;
+  height: 180px;
   object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
 }
 
-.product-card h4 {
-  font-size: 1.2rem;
-  margin: 0.5rem 0;
-}
-
-.product-card p {
-  font-size: 0.9rem;
-  color: #555;
-}
-
-.product-card .price {
+.price {
   font-weight: bold;
   color: #16a34a;
-  margin: 0.5rem 0;
+  margin-bottom: 0.5rem;
 }
 
-.product-card button {
-  background-color: #2563eb;
+.no-products {
+  color: #9ca3af;
+  text-align: center;
+}
+
+button {
+  background-color: #3b82f6;
   color: white;
   border: none;
-  padding: 0.5rem 1rem;
   border-radius: 8px;
-  margin-top: 0.5rem;
+  padding: 8px 12px;
   cursor: pointer;
-  transition: background-color 0.2s;
 }
 
-.product-card button:hover {
-  background-color: #1e40af;
+button:hover {
+  background-color: #2563eb;
+}
+
+.go-cart {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.cart-button {
+  background: #16a34a;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.cart-button:hover {
+  background: #15803d;
 }

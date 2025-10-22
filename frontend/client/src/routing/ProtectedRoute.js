@@ -1,6 +1,6 @@
 import { Router } from 'express';
 const router = Router();
-import { Product } from '../'; // adjust path if needed
+import { Product } from '../'; 
 
 // GET /products
 router.get('/', async (req, res) => {

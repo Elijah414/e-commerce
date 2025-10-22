@@ -1,0 +1,16 @@
+.admin-dashboard {
+  display: flex;
+  height: 100vh;
+  background-color: #f7f9fc;
+}
+
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  padding: 2rem;
+  overflow-y: auto;
+}

@@ -18,18 +18,22 @@ app.use(cors({
 app.use(express.json());
 
 // Routes
-app.use('/products', productRoutes);         // Product routes
-app.use('/orders', orderRoutes);             // Order routes
-app.use('/cart', cartRoutes);               // Cart routes
-app.use('/auth', authRoutes);               // Authentication routes
+app.use('/products', productRoutes);         
+app.use('/orders', orderRoutes);             
+app.use('/cart', cartRoutes);              
+app.use('/auth', authRoutes);               
 
-// Admin routes should be prefixed with '/admin'
+
 app.use('/admin', adminRoutes);
+app.use("/categories", require("./routes/categoryRoutes"));
+app.use("/products", require("./routes/productRoutes"));
 
-// Test route
+
+
 app.get('/', (req, res) => res.send('Backend is working!'));
 
-// Sync DB: Sync and alter the schema automatically
+
+
 sequelize.sync({ alter: true })
   .then(() => console.log('Database synced'))
   .catch((err) => console.error('Sync error:', err));

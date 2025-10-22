@@ -1,68 +1,68 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import Sidebar from "../components/Admin/sidebar";
+import Topbar from "../components/Admin/Topbar";
+import OrderTable from "../components/Admin/orderTable";
+import "./AdminDashboard.css";
 
 const AdminPage = () => {
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('adminToken');
+    const token = localStorage.getItem("adminToken");
     if (!token) return;
-  
-    axios.get('http://localhost:5000/orders', {
-      headers: {
-        Authorization: `Bearer ${token}`, // ✅ Pass admin token
-      },
-    })
-      .then((response) => setOrders(response.data))
-      .catch((error) => {
-        console.log(error);
-        toast.error('Failed to load orders.');
+
+    axios
+      .get("http://localhost:5000/orders", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        setOrders(res.data);
+        setLoading(false);
+      })
+      .catch(() => {
+        toast.error("Failed to load orders.");
+        setLoading(false);
       });
   }, []);
-  
+
   const updateOrderStatus = (orderId, status) => {
-    const token = localStorage.getItem('adminToken');
+    const token = localStorage.getItem("adminToken");
     if (!token) return;
-  
-    axios.patch(`http://localhost:5000/orders/${orderId}`, { status }, {
-      headers: {
-        Authorization: `Bearer ${token}`, // ✅ Admin token again
-      },
-    })
+
+    axios
+      .patch(
+        `http://localhost:5000/orders/${orderId}`,
+        { status },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
       .then(() => {
-        toast.success('Order status updated');
-        setOrders(orders.map(order => (order.id === orderId ? { ...order, status } : order)));
+        toast.success("Order status updated");
+        setOrders((prev) =>
+          prev.map((o) => (o.id === orderId ? { ...o, status } : o))
+        );
       })
-      .catch(() => toast.error('Failed to update status.'));
+      .catch(() => toast.error("Failed to update status."));
   };
-  
 
   return (
-    <div>
-      <h1>Admin - Orders</h1>
-      <div className="product-grid"> 
-      {orders.map(order => (
-  <div key={order.id}>
-    <h4>Order ID: {order.id}</h4>
-    <p>Status: {order.order_status}</p>
-    <p>Customer: {order.customer_name}</p>
-    <p>Address: {order.address}</p>
-    <h5>Items:</h5>
-    <ul>
-      {order.CartItems?.map((item, idx) => (
-        <li key={idx}>
-          {item.Product?.name} - Qty: {item.quantity}, Price: R{item.Product?.price}
-        </li>
-      ))}
-    </ul>
-    <button onClick={() => updateOrderStatus(order.id, 'Shipped')}>Mark as Shipped</button>
-    <button onClick={() => updateOrderStatus(order.id, 'Delivered')}>Mark as Delivered</button>
-  </div>
-))}
-
-      
-    </div>
+    <div className="admin-dashboard">
+      <Sidebar />
+      <div className="main-content">
+        <Topbar />
+        <div className="content">
+          <h2>Orders Overview</h2>
+          {loading ? (
+            <p>Loading orders...</p>
+          ) : (
+            <OrderTable orders={orders} onUpdate={updateOrderStatus} />
+          )}
+        </div>
+      </div>
     </div>
   );
 };

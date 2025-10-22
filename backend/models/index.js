@@ -4,7 +4,7 @@ const sequelize = require('../config');
 // Import model definition functions
 const defineUser = require('./user');
 const defineProduct = require('./product');
-const defineCategory = require('./categ');
+const defineCategory = require('./category');
 const defineCartItem = require('./CartItem');
 
 // Initialize models

@@ -1,0 +1,29 @@
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.order-table th, .order-table td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.order-table th {
+  background: #f1f5f9;
+  text-align: left;
+}
+
+.btn {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  margin-right: 5px;
+  cursor: pointer;
+  color: white;
+}
+
+.btn.shipped { background: #3b82f6; }
+.btn.delivered { background: #16a34a; }

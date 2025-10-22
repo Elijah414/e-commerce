@@ -19,5 +19,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
+  // ✅ Define associations *after* defining Category
+  Category.associate = (models) => {
+    Category.hasMany(models.Product, {
+      foreignKey: 'categoryId',
+      as: 'products',
+    });
+  };
+
   return Category;
 };
