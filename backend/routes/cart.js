@@ -1,8 +1,9 @@
-// routes/cartRoutes.js
+
 const express = require('express');
 const router = express.Router();
 const { Cart, CartItem, Product } = require('../models');
-const authenticateToken = require('../middleware/authMiddleware');
+const { authenticateToken } = require('../middleware/authMiddleware');
+
 
 router.get('/cart', authenticateToken, async (req, res) => {
   try {

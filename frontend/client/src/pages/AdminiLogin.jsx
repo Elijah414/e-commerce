@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import './AdminiLogin.css'
+import './AdminiLogin.css';
 
 const AdminLogin = () => {
   const [email, setEmail] = useState('');
@@ -13,27 +13,36 @@ const AdminLogin = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post('http://localhost:5000/admin/login', {
-        email,
-        password,
-      });
+      const res = await axios.post('http://localhost:5000/auth/login', { email, password });
 
-      localStorage.setItem('adminToken', res.data.token);
-      toast.success('Admin login successful!');
-      navigate('/admin'); // Redirect to Admin Dashboard
+      const { token, role } = res.data;
+      if (!['admin', 'driver', 'packer'].includes(role)) {
+        toast.error('Only admins, drivers, and packers can log in here.');
+        return;
+      }
+
+      localStorage.setItem('token', token);
+      localStorage.setItem('role', role);
+
+      toast.success(`${role} login successful!`);
+
+      if (role === 'admin') navigate('/admin');
+      else if (role === 'driver') navigate('/driver');
+      else if (role === 'packer') navigate('/packer');
+
     } catch (err) {
       console.error('Login error:', err.response?.data || err.message);
-      toast.error('Invalid admin credentials');
+      toast.error(err.response?.data?.message || 'Invalid credentials');
     }
   };
 
   return (
     <div className="login-container">
-      <h2>Admin Login</h2>
+      <h2>Admin / Staff Login</h2>
       <form onSubmit={handleLogin} className="login-form">
         <input
           type="email"
-          placeholder="Admin Email"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -41,7 +50,7 @@ const AdminLogin = () => {
 
         <input
           type="password"
-          placeholder="Admin Password"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required

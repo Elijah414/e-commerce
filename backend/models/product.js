@@ -9,9 +9,16 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Product.associate = (models) => {
+    // Link to Category
     Product.belongsTo(models.Category, {
       foreignKey: 'categoryId',
       as: 'Category',
+    });
+
+    // Link to OrderItem
+    Product.hasMany(models.OrderItem, {
+      foreignKey: 'ProductId',
+      as: 'OrderItems',
     });
   };
 

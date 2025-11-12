@@ -1,0 +1,14 @@
+module.exports = (sequelize, DataTypes) => {
+  const Packer = sequelize.define('Packer', {
+    id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+    name: { type: DataTypes.STRING, allowNull: false },
+    email: { type: DataTypes.STRING, allowNull: false, unique: true },
+    password: { type: DataTypes.STRING, allowNull: false }, // hashed
+  });
+
+  Packer.associate = (models) => {
+    Packer.hasMany(models.Order, { foreignKey: 'packerId', as: 'orders' });
+  };
+
+  return Packer;
+};

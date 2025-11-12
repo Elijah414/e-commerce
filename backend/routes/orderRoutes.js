@@ -1,19 +1,41 @@
+// backend/routes/orderRoutes.js
 const express = require('express');
 const router = express.Router();
 const orderController = require('../controller/orderController');
 const { verifyToken } = require('../services/auth/auth');
-//const orderController = require('../controller/orderController');
 const adminAuth = require('../middleware/adminAuth');
+const driverAuth = require('../middleware/driverAuth');
+const packerAuth = require('../middleware/packerAuth');
 
+// =============================
+// CUSTOMER ROUTES
+// =============================
 
-router.get('/', orderController.getAllOrders);
-router.post('/', verifyToken, orderController.createOrder); // ✅ Protected route
-router.patch('/:orderId', orderController.updateOrderStatus);
+// Create a new order (Customer only - must be logged in)
+router.post('/', verifyToken, orderController.createOrder);
 
-// Admin-only: Get all orders
-router.get('/orders', adminAuth, orderController.getAllOrders);
+// =============================
+// ADMIN ROUTES
+// =============================
 
-// Admin-only: Update order status
-router.patch('/orders/:id', adminAuth, orderController.updateOrderStatus);
+// Get all orders OR filter by status (Admin only)
+router.get('/admin', adminAuth, orderController.getAllOrders);
+
+// Update order status (Admin only)
+router.patch('/admin/:orderId', adminAuth, orderController.updateOrderStatus);
+
+// =============================
+//  DRIVER ROUTES
+// =============================
+
+// Get all orders assigned to this driver
+router.get('/driver', driverAuth, orderController.getDriverOrders);
+
+// =============================
+//  PACKER ROUTES
+// =============================
+
+// Get all orders assigned to this packer
+router.get('/packer', packerAuth, orderController.getPackerOrders);
 
 module.exports = router;
